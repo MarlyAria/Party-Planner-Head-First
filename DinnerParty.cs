@@ -15,12 +15,10 @@ namespace WindowsFormsApp2
         public bool FancyDecorations { get; set; }
         public bool HealthyOption { get; set; }
 
-        public DinnerParty(int numberOfPeople,
-            bool fancyDecorations, bool healtyOption)
+        public DinnerParty(int numberOfPeople)
         {
             NumberOfPeople = numberOfPeople;
-            FancyDecorations = fancyDecorations;
-            HealthyOption = healtyOption;
+            
         }
         public void SetPartyOptions(int People, bool fancy)
         {

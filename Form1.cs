@@ -17,8 +17,9 @@ namespace WindowsFormsApp2
         public Form1()
         {
             InitializeComponent();
-            dinnerParty = new DinnerParty((int)NumberOfPeopleNUD.Value,
-                        fancyBox.Checked, healtyBox.Checked);
+            dinnerParty = new DinnerParty((int)NumberOfPeopleNUD.Value);
+            dinnerParty.SetHealthyOption(healtyBox.Checked);
+            dinnerParty.CalculateCostOfDecoration(fancyBox.Checked);
             DisplayDinnerPartyCost();
 
             birthdayParty = new BirthdayParty((int)numberBirthday.Value,
@@ -36,7 +37,7 @@ namespace WindowsFormsApp2
         {
             tooLongLabel.Visible = birthdayParty.CakeWritingTooLong;
             decimal cost = birthdayParty.Cost;
-            BirthdayCost.Text = cost.ToString("c");
+            DisplayBirthdayCostLabel.Text = cost.ToString("c");
         }
         private void NumberOfPeopleNUD_ValueChanged(object sender, EventArgs e)
         {
