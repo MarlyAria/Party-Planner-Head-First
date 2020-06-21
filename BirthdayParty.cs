@@ -7,19 +7,18 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp2
 {
-    class BirthdayParty:Party
+    class BirthdayParty : Party
     {
-        public string CakeWriting { get; set; }
-        public bool CakeWritingTooLong
+       
+        public BirthdayParty
+            (int numberOfPeople, bool fancydecorations, string cakeWriting)
         {
-            get
-            {
-                if (CakeWriting.Length > MaxWritingLength())
-                    return true;
-                else
-                    return false;
-            }
+            NumberOfPeople = numberOfPeople;
+            FancyDecorations = fancydecorations;
+            CakeWriting = cakeWriting;
         }
+        public string CakeWriting { get; set; }
+       
         private int ActualLength
         {
             get
@@ -30,16 +29,6 @@ namespace WindowsFormsApp2
                     return CakeWriting.Length;
             }
         }
-
-        private int MaxWritingLength()
-        {
-            // bepaald hoeveel letter er op een taart kunnen
-            if (Cakesize() == 8)
-                return 16;
-            else
-                return 40;
-        }
-
         private int Cakesize()
         {
             // bepaald de groote van een taart
@@ -48,25 +37,30 @@ namespace WindowsFormsApp2
             else
                 return 16;
         }
-
-
-        public BirthdayParty(int numberOfPeople,
-            bool fancyDecorations, string cakeWriting)
+            private int MaxWritingLength()
         {
-            NumberOfPeople = numberOfPeople;
-            FancyDecorations = fancyDecorations;
-            CakeWriting = cakeWriting;
+            // bepaald hoeveel letter er op een taart kunnen
+            if (Cakesize() == 8)
+                return 16;
+            else
+                return 40;
         }
-
-        
-
-        
-        public decimal Cost
+        public bool CakeWritingTooLong
         {
             get
             {
-                decimal totalCost = Party.CalculateCostOfDecorations();
-                totalCost += CostOfFoodPerPerson * NumberOfPeople;
+                if (CakeWriting.Length > MaxWritingLength())
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        override public decimal Cost
+        {
+            get
+            {
+                decimal totalCost = base.Cost;
                 decimal cakeCost;
                 if (Cakesize() == 8)
                     cakeCost = 40m + ActualLength * .25M;

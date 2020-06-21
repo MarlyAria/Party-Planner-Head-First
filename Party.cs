@@ -9,7 +9,7 @@ namespace WindowsFormsApp2
     class Party
     {
         public const int CostOfFoodPerPerson = 25;
-        internal int NumberOfPeople { get; set; }
+        public int NumberOfPeople { get; set; }
         public bool FancyDecorations { get; set; }
        
         private decimal CalculateCostOfDecoration()
@@ -23,6 +23,7 @@ namespace WindowsFormsApp2
             {
                 CostOfDecorations = 30M + (7.50M * NumberOfPeople);
             }
+            return CostOfDecorations;
         }
 
         virtual public Decimal Cost

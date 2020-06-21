@@ -17,45 +17,49 @@ namespace WindowsFormsApp2
         public Form1()
         {
             InitializeComponent();
-            dinnerParty = new DinnerParty((int)NumberOfPeopleNUD.Value);
-            dinnerParty.SetHealthyOption(healtyBox.Checked);
-            dinnerParty.CalculateCostOfDecoration(fancyBox.Checked);
+            dinnerParty = new DinnerParty((int)numberDinner.Value, healthyBox.Checked, fancyDinnerBox.Checked);
             DisplayDinnerPartyCost();
 
             birthdayParty = new BirthdayParty((int)numberBirthday.Value,
-                            fancyBirthday.Checked, cakeWriting.Text);
+                            fancyBirthdayBox.Checked, cakeWriting.Text);
             DisplayBirthdayPartyCost();
         }
 
+        #region DinnerParty
         private void DisplayDinnerPartyCost()
         {
-            decimal Cost = dinnerParty.CalculateCost(healtyBox.Checked);
-            DisplayCostLabel.Text = Cost.ToString("c"); // the "c" will formaat the Cost into a currency
+            decimal Cost = dinnerParty.Cost;
+            DisplayCostLabel.Text = Cost.ToString("c"); // the "c" will format the Cost into a currency
         }
 
+        private void numberDinner_ValueChanged(object sender, EventArgs e)
+        {
+            dinnerParty.NumberOfPeople = (int)numberDinner.Value;
+            DisplayDinnerPartyCost();
+        }
+
+        private void fancyDinnerBox_CheckedChanged(object sender, EventArgs e)
+        {
+            dinnerParty.FancyDecorations = fancyDinnerBox.Checked;
+            DisplayDinnerPartyCost();
+        }
+
+
+        private void healtyBox_CheckedChanged(object sender, EventArgs e)
+        {
+            dinnerParty.HealthyOption = healthyBox.Checked;
+            DisplayDinnerPartyCost();
+        }
+
+
+        #endregion
+
+        #region BirthdayParty
         private void DisplayBirthdayPartyCost()
         {
             tooLongLabel.Visible = birthdayParty.CakeWritingTooLong;
             decimal cost = birthdayParty.Cost;
             DisplayBirthdayCostLabel.Text = cost.ToString("c");
-        }
-        private void NumberOfPeopleNUD_ValueChanged(object sender, EventArgs e)
-        {
-            dinnerParty.SetPartyOptions((int)NumberOfPeopleNUD.Value, fancyBox.Checked);
-            DisplayDinnerPartyCost();
-        }
-
-        private void fancyBox_CheckedChanged(object sender, EventArgs e)
-        {
-            dinnerParty.CalculateCostOfDecoration(fancyBox.Checked);
-            DisplayDinnerPartyCost();
-
-        }
-
-        private void HealtyCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            dinnerParty.SetHealthyOption(healtyBox.Checked);
-            DisplayDinnerPartyCost();
         }
 
         private void numberBirthday_ValueChanged(object sender, EventArgs e)
@@ -64,16 +68,18 @@ namespace WindowsFormsApp2
             DisplayBirthdayPartyCost();
         }
 
-        private void fancyBirthday_CheckedChanged(object sender, EventArgs e)
+        private void fancyBirthdayBox_CheckedChanged(object sender, EventArgs e)
         {
-            birthdayParty.FancyDecoractions = fancyBirthday.Checked;
-            DisplayBirthdayPartyCost();
+            birthdayParty.FancyDecorations = fancyBirthdayBox.Checked;
+            DisplayDinnerPartyCost();
         }
 
         private void cakeWriting_TextChanged(object sender, EventArgs e)
         {
             birthdayParty.CakeWriting = cakeWriting.Text;
             DisplayBirthdayPartyCost();
+            #endregion
+
         }
     }
 }

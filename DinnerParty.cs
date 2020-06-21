@@ -6,55 +6,39 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp2
 {
-    class DinnerParty:Party
+    class DinnerParty : Party
     {
-        public decimal CostOfBeveragesPerPerson;
         public bool HealthyOption { get; set; }
 
-        public DinnerParty(int numberOfPeople)
+        public DinnerParty
+            (int numberOfPeople, bool healthyOption, bool fancydecoration)
         {
             NumberOfPeople = numberOfPeople;
-            
-        }
-        public void SetPartyOptions(int People, bool fancy)
-        {
-            NumberOfPeople = People;
-            CalculateCostOfDecoration(fancy);
+            HealthyOption = healthyOption;
+            FancyDecorations = fancydecoration;
         }
 
-        public int GetNumberOfPeople()
+        private decimal CalculateCostOfBeveragesPerPerson()
         {
-            return NumberOfPeople;
-        }
-        public void SetHealthyOption(bool HealthyOption)
-        {
+            decimal costOfBeveragesPerPerson;
             if (HealthyOption)
-
-            {
-                CostOfBeveragesPerPerson = 5.00M;
-            }
+                costOfBeveragesPerPerson = 5.00M;
             else
-            {
-                CostOfBeveragesPerPerson = 20.00M;
-            }
+                costOfBeveragesPerPerson = 20.00M;
+            return costOfBeveragesPerPerson;
         }
-        
 
-        public decimal CalculateCost(bool healthyOption)
+        override public decimal Cost
         {
-            decimal totalCost = CostOfDecorations +
-                ((CostOfBeveragesPerPerson + CostOfFoodPerPerson)
-                * NumberOfPeople);
-
-            if (healthyOption)
+            get
             {
-                return totalCost * .95M;
-            }
-            else
-            {
+                decimal totalCost = base.Cost;
+                totalCost += CalculateCostOfBeveragesPerPerson() * NumberOfPeople;
+                if (HealthyOption)
+                    totalCost += .95M;
                 return totalCost;
-            }
 
+            }
         }
     }
 }
