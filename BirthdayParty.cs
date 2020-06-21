@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,19 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp2
 {
-    class BirthdayParty
+    class BirthdayParty:Party
     {
-        public const int CostOfFoodPerPerson = 25;
-        public int NumberOfPeople { get; set; }
-        public bool FancyDecoractions { get; set; }
         public string CakeWriting { get; set; }
+        public bool CakeWritingTooLong
+        {
+            get
+            {
+                if (CakeWriting.Length > MaxWritingLength())
+                    return true;
+                else
+                    return false;
+            }
+        }
         private int ActualLength
         {
             get
@@ -46,37 +54,18 @@ namespace WindowsFormsApp2
             bool fancyDecorations, string cakeWriting)
         {
             NumberOfPeople = numberOfPeople;
-            FancyDecoractions = fancyDecorations;
+            FancyDecorations = fancyDecorations;
             CakeWriting = cakeWriting;
         }
 
-        public bool CakeWritingTooLong
-        {
-            get
-            {
-                if (CakeWriting.Length > MaxWritingLength())
-                    return true;
-                else
-                    return false;
-            }
-        }
+        
 
-        private Decimal CalculateCostOfDecorations()
-        {
-            decimal costOfDecorations;
-            if (FancyDecoractions)
-                costOfDecorations = (NumberOfPeople * 15.00M) + 50M;
-            else
-                costOfDecorations = (NumberOfPeople * 7.50M) + 30M;
-            return costOfDecorations;
-
-        }
-
+        
         public decimal Cost
         {
             get
             {
-                decimal totalCost = CalculateCostOfDecorations();
+                decimal totalCost = Party.CalculateCostOfDecorations();
                 totalCost += CostOfFoodPerPerson * NumberOfPeople;
                 decimal cakeCost;
                 if (Cakesize() == 8)

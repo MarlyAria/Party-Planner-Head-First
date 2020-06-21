@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp2
 {
-    class DinnerParty
+    class DinnerParty:Party
     {
-        public const int CostOfFoodPerPerson = 25;
-        private int NumberOfPeople { get; set; }
         public decimal CostOfBeveragesPerPerson;
-        public decimal CostOfDecorations = 0;
-        public bool FancyDecorations { get; set; }
         public bool HealthyOption { get; set; }
 
         public DinnerParty(int numberOfPeople)
@@ -42,18 +38,7 @@ namespace WindowsFormsApp2
                 CostOfBeveragesPerPerson = 20.00M;
             }
         }
-        public void CalculateCostOfDecoration(bool Fancy)
-
-        {
-            if (Fancy)
-            {
-                CostOfDecorations = 50M + (15.0M * NumberOfPeople);
-            }
-            else
-            {
-                CostOfDecorations = 30M + (7.50M * NumberOfPeople);
-            }
-        }
+        
 
         public decimal CalculateCost(bool healthyOption)
         {
